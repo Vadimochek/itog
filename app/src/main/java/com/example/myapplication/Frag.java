@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,14 @@ import android.widget.Toast;
 
 public class Frag extends Fragment {
 EditText editText;
+Activity activity;
+@Override
+public void onAttach(Context context){
+    super.onAttach(context);
+    if(context instanceof Activity){
+        activity=(Activity) context;
+    }
+}
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment, null);
@@ -20,7 +30,14 @@ EditText editText;
         Button button = (Button) v.findViewById(R.id.button);
         button.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                
+                int value = Integer.parseInt(editText.getText().toString());
+                editText.setText("");
+                try{
+                    ((Mesage) activity).fragmentvalue(value);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                Toast.makeText(getActivity(),"Сохранено",Toast.LENGTH_SHORT).show();
             }
         });
 

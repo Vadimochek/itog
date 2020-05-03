@@ -9,6 +9,7 @@
 
     <EditText
         android:id="@+id/edit"
+        android:inputType="number"
         android:layout_width="155dp"
         android:layout_height="64dp"
         android:layout_marginStart="112dp"
