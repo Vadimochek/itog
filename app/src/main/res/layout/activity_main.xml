@@ -51,9 +51,10 @@
         style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
         android:layout_width="354dp"
         android:layout_height="103dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginLeft="72dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="44dp"
+        android:progressDrawable="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/frag2"
         app:layout_constraintStart_toStartOf="parent" />
 

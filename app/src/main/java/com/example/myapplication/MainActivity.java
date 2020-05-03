@@ -1,10 +1,13 @@
 package com.example.myapplication;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.app.FragmentManager;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -30,29 +33,15 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         pb = findViewById(R.id.pB);
-     //   min = findViewById(R.id.minus);
-     //   sum = findViewById(R.id.plus);
+        min = findViewById(R.id.minus);
+        sum = findViewById(R.id.plus);
         account = new Values();
         frag1 = new Frag();
         frag2 = new Frag2();
-        /*min.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Frag frag1 = new Frag();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.add(R.id.frag2, frag1);
-                ft.commit();
-            }
-        });
-        sum.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Frag2 frag2 = new Frag2();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.remove();
-                ft.add(R.id.frag2, frag2);
-                ft.commit();
 
-            }
-        });*/
+
+
+
     }
 
     public void onClick(View v) {
