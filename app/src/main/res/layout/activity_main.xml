@@ -29,8 +29,9 @@
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         android:layout_marginBottom="203dp"
-        android:text="Вычесть"
+        android:background="#A53B3B"
         android:onClick="onClick"
+        android:text="Вычесть"
         app:layout_constraintBottom_toTopOf="@+id/frag2"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -48,14 +49,25 @@
 
     <ProgressBar
         android:id="@+id/pB"
-        style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="354dp"
         android:layout_height="103dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="44dp"
-        android:progressDrawable="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/frag2"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/ras"
+        android:onClick="onClick"
+        android:layout_width="45dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginRight="176dp"
+        android:background="@android:drawable/ic_menu_month"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

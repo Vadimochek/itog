@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -60,6 +61,10 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
                     ft.add(R.id.frag2, frag2);
                 } else ft.replace(R.id.frag2, frag2);
                 ft.commit();
+                break;
+            case R.id.ras:
+                Intent i=new Intent(MainActivity.this, Second.class);
+                startActivity(i);
                 break;
             default:
                 break;
