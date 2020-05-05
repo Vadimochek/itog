@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Second"></activity>
+        <activity android:name=".Information"></activity>
     </application>
 
 </manifest>

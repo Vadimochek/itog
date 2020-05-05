@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
     Frag2 frag2;
     Values account;
     int count = 0;
-
+    static public int teleport;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
     public void fragmentvalue(int value) {
         account.waste =account.waste+value;
         pb.setProgress(account.waste);
-
+        teleport=account.summary-account.waste;
     }
 
 
