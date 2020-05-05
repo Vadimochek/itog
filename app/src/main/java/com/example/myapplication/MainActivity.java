@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity implements Mesage,Summary {
     ProgressBar pb;
     Button sum, min;
+    TextView summy,itogo,dif;
     FragmentTransaction ft;
     Frag frag1;
     Frag2 frag2;
@@ -39,10 +40,9 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         account = new Values();
         frag1 = new Frag();
         frag2 = new Frag2();
-
-
-
-
+        summy = findViewById(R.id.summa);
+        itogo = findViewById(R.id.itogo);
+        dif=findViewById(R.id.different);
     }
 
     public void onClick(View v) {
@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         account.waste =account.waste+value;
         pb.setProgress(account.waste);
         teleport=account.summary-account.waste;
+        dif.setText("Потрачено: "+account.waste);
+        itogo.setText("Осталось: "+teleport);
+
     }
 
 
@@ -83,5 +86,6 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
     public void fragsum(int value) {
         account.summary += value;
         pb.setMax(account.summary);
+        summy.setText("Всего: "+account.summary);
     }
 }
