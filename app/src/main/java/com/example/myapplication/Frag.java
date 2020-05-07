@@ -7,13 +7,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.content.DialogInterface;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Frag extends Fragment {
+import androidx.fragment.app.DialogFragment;
+
+public class Frag extends  DialogFragment {
 EditText editText;
 Activity activity;
 @Override
@@ -25,6 +28,7 @@ public void onAttach(Context context){
 }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getDialog().setTitle("Потрачено");
         View v = inflater.inflate(R.layout.fragment, null);
         editText = v.findViewById(R.id.edit);
         Button button = (Button) v.findViewById(R.id.button);
@@ -38,9 +42,17 @@ public void onAttach(Context context){
                     e.printStackTrace();
                 }
                 Toast.makeText(getActivity(),"Сохранено",Toast.LENGTH_SHORT).show();
+                dismiss();
             }
         });
 
         return v;
+    }
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+    }
+
+    public void onCancel(DialogInterface dialog) {
+        super.onCancel(dialog);
     }
 }

@@ -11,7 +11,6 @@ public class Information extends AppCompatActivity implements Mesage,Summary {
         //setContentView(R.layout.);
 
     }
-    public void fragmentvalue(int value){
-    }
+    public void fragmentvalue(int value){}
     public void fragsum(int value){}
 }

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#03A9F4"
-    tools:context=".MainActivity" >
+    android:background="@drawable/morning"
+    tools:context=".MainActivity">
 
     <Button
         android:id="@+id/plus"
@@ -16,8 +16,8 @@
         android:layout_marginLeft="75dp"
         android:layout_marginBottom="203dp"
         android:background="#5161E701"
-        android:text="Внести"
         android:onClick="onClick"
+        android:text="Внести"
         app:layout_constraintBottom_toTopOf="@+id/frag2"
         app:layout_constraintStart_toStartOf="parent" />
 

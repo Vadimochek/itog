@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import androidx.fragment.app.DialogFragment;
 
-public class Frag2 extends Fragment {
+public class Frag2 extends DialogFragment {
     EditText editText;
     Activity activity;
     @Override
@@ -25,6 +27,7 @@ public class Frag2 extends Fragment {
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getDialog().setTitle("Получено");
         View v = inflater.inflate(R.layout.fragment2, null);
         editText = v.findViewById(R.id.edit2);
         Button button = (Button) v.findViewById(R.id.button2);
@@ -38,9 +41,17 @@ public class Frag2 extends Fragment {
                     e.printStackTrace();
                 }
                 Toast.makeText(getActivity(),"Сохранено",Toast.LENGTH_SHORT).show();
+                dismiss();
             }
         });
 
         return v;
+    }
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+    }
+
+    public void onCancel(DialogInterface dialog) {
+        super.onCancel(dialog);
     }
 }

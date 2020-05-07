@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 
 public class MainActivity extends AppCompatActivity implements Mesage,Summary {
@@ -25,8 +26,8 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
     Button sum, min;
     TextView summy,itogo,dif;
     FragmentTransaction ft;
-    Frag frag1;
-    Frag2 frag2;
+    DialogFragment frag1;
+    DialogFragment frag2;
     Values account;
     int count = 0;
     static public int teleport;
@@ -49,18 +50,20 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         ft = getFragmentManager().beginTransaction();
         switch (v.getId()) {
             case R.id.minus:
-                if (count == 0) {
-                    count = 1;
-                    ft.add(R.id.frag2, frag1);
-                } else ft.replace(R.id.frag2, frag1);
-                ft.commit();
+                //if (count == 0) {
+                 //   count = 1;
+                  //  ft.add(R.id.frag2, frag1);
+                //} else ft.replace(R.id.frag2, frag1);
+                //ft.commit();
+                frag1.show(getSupportFragmentManager(),"frag1");
                 break;
             case R.id.plus:
-                if (count == 0) {
+              /*  if (count == 0) {
                     count = 1;
                     ft.add(R.id.frag2, frag2);
                 } else ft.replace(R.id.frag2, frag2);
-                ft.commit();
+                ft.commit();*/
+              frag2.show(getSupportFragmentManager(),"frag2");
                 break;
             case R.id.ras:
                 Intent i=new Intent(MainActivity.this, Second.class);
@@ -72,7 +75,8 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
     }
 
     @Override
-    public void fragmentvalue(int value) {
+    public void fragmentvalue(int value)
+    {
         account.waste =account.waste+value;
         pb.setProgress(account.waste);
         teleport=account.summary-account.waste;
@@ -83,7 +87,8 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
 
 
     @Override
-    public void fragsum(int value) {
+    public void fragsum(int value)
+    {
         account.summary += value;
         pb.setMax(account.summary);
         summy.setText("Всего: "+account.summary);
