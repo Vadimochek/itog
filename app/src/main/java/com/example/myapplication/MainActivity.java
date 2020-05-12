@@ -1,24 +1,24 @@
 package com.example.myapplication;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.app.FragmentManager;
 
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements Mesage,Summary {
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
     Values account;
     int count = 0;
     static public int teleport;
+    DBHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         summy = findViewById(R.id.summa);
         itogo = findViewById(R.id.itogo);
         dif=findViewById(R.id.different);
+        dbHelper=new DBHelper(this);
     }
 
     public void onClick(View v) {
@@ -69,6 +71,10 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
                 Intent i=new Intent(MainActivity.this, Second.class);
                 startActivity(i);
                 break;
+            case R.id.info:
+                Intent intent=new Intent(MainActivity.this, Information.class);
+                startActivity(intent);
+                break;
             default:
                 break;
         }
@@ -82,7 +88,11 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         teleport=account.summary-account.waste;
         dif.setText("Потрачено: "+account.waste);
         itogo.setText("Осталось: "+teleport);
-
+        ContentValues cv=new ContentValues();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        cv.put("value",value);
+        cv.put("direction","-");
+        dbHelper.close();
     }
 
 
@@ -92,5 +102,13 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         account.summary += value;
         pb.setMax(account.summary);
         summy.setText("Всего: "+account.summary);
+        ContentValues cv=new ContentValues();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        cv.put("value",value);
+        cv.put("direction","+");
+      //  Date qt=new Date();
+        //cv.put("date",qt);
+        dbHelper.close();
     }
+
 }
