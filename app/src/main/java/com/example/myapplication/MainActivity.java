@@ -13,11 +13,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -29,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
     DialogFragment frag1;
     DialogFragment frag2;
     Values account;
-    int count = 0;
     static public int teleport;
     DBHelper dbHelper;
     @Override
@@ -52,19 +54,10 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         ft = getFragmentManager().beginTransaction();
         switch (v.getId()) {
             case R.id.minus:
-                //if (count == 0) {
-                 //   count = 1;
-                  //  ft.add(R.id.frag2, frag1);
-                //} else ft.replace(R.id.frag2, frag1);
-                //ft.commit();
-                frag1.show(getSupportFragmentManager(),"frag1");
+                if(account.summary==0) Toast.makeText(getApplicationContext(),"Сначала внесите сумму",Toast.LENGTH_SHORT).show();
+               else  frag1.show(getSupportFragmentManager(),"frag1");
                 break;
             case R.id.plus:
-              /*  if (count == 0) {
-                    count = 1;
-                    ft.add(R.id.frag2, frag2);
-                } else ft.replace(R.id.frag2, frag2);
-                ft.commit();*/
               frag2.show(getSupportFragmentManager(),"frag2");
                 break;
             case R.id.ras:
@@ -75,6 +68,10 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
                 Intent intent=new Intent(MainActivity.this, Information.class);
                 startActivity(intent);
                 break;
+            case R.id.day:
+                Intent in=new Intent(MainActivity.this,Day.class);
+                startActivity(in);
+                break;
             default:
                 break;
         }
@@ -83,32 +80,46 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
     @Override
     public void fragmentvalue(int value)
     {
-        account.waste =account.waste+value;
-        pb.setProgress(account.waste);
-        teleport=account.summary-account.waste;
-        dif.setText("Потрачено: "+account.waste);
-        itogo.setText("Осталось: "+teleport);
-        ContentValues cv=new ContentValues();
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        cv.put("value",value);
-        cv.put("direction","-");
-        dbHelper.close();
+        account.waste = account.waste + value;
+        if (account.summary-account.waste<0) Toast.makeText(getApplicationContext(),"Вы превысили свой лимит,введите меньшую сумму или внесите её",Toast.LENGTH_SHORT).show();
+       else {
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            pb.setProgress(account.waste);
+            teleport = account.summary - account.waste;
+            dif.setText("Потрачено: " + account.waste);
+            itogo.setText("Осталось: " + teleport);
+            ContentValues cv = new ContentValues();
+            cv.put("value", value);
+            cv.put("direction", "Списание");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy   HH:mm");
+            Date date = new Date();
+            String dateTime = dateFormat.format(date);
+            cv.put("date", dateTime);
+            db.insert("datatable", null, cv);
+            dbHelper.close();
+            Toast.makeText(getApplicationContext(),"Сохранено",Toast.LENGTH_SHORT).show();
+        }
     }
 
 
     @Override
     public void fragsum(int value)
     {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         account.summary += value;
         pb.setMax(account.summary);
         summy.setText("Всего: "+account.summary);
+        teleport=account.summary-account.waste;
         ContentValues cv=new ContentValues();
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         cv.put("value",value);
-        cv.put("direction","+");
-      //  Date qt=new Date();
-        //cv.put("date",qt);
+        cv.put("direction","Внесение");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy   HH:mm");
+        Date date = new Date();
+        String dateTime = dateFormat.format(date);
+        cv.put("date",dateTime);
+        db.insert("datatable", null, cv);
         dbHelper.close();
+        Toast.makeText(getApplicationContext(),"Сохранено",Toast.LENGTH_SHORT).show();
     }
 
 }

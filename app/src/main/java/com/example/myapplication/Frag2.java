@@ -27,21 +27,22 @@ public class Frag2 extends DialogFragment {
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getDialog().setTitle("Получено");
         View v = inflater.inflate(R.layout.fragment2, null);
         editText = v.findViewById(R.id.edit2);
         Button button = (Button) v.findViewById(R.id.button2);
         button.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                int value = Integer.parseInt(editText.getText().toString());
-                editText.setText("");
-                try{
-                    ((Summary) activity).fragsum(value);
-                }catch (Exception e){
-                    e.printStackTrace();
+                if(editText.getText().toString().equals("")) Toast.makeText(getActivity(),"Введите сумму",Toast.LENGTH_SHORT).show();
+                else {
+                    int value = Integer.parseInt(editText.getText().toString());
+                    editText.setText("");
+                    try {
+                        ((Summary) activity).fragsum(value);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    dismiss();
                 }
-                Toast.makeText(getActivity(),"Сохранено",Toast.LENGTH_SHORT).show();
-                dismiss();
             }
         });
 

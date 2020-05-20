@@ -21,6 +21,8 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".Information"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".Day"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

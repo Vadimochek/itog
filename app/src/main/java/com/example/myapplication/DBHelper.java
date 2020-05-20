@@ -10,7 +10,7 @@ class DBHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db){
-        db.execSQL("create table datatable("+"id integer primary key autoincrement,"+"value integer,"+"direction text"+");");
+        db.execSQL("create table datatable (" +"date text,"+"value integer,"+"direction text,"+"day integer"+");");
     }
     @Override
     public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion){}
