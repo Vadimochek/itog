@@ -13,12 +13,10 @@ import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.DialogInterface;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import androidx.fragment.app.DialogFragment;
 
 public class Second extends Activity {
     EditText text;
@@ -26,8 +24,7 @@ public class Second extends Activity {
     Button ras, exit;
     CalendarView calendarView;
     DBHelper dbHelper;
-    int DAY = 0;
-
+    int DAY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +35,6 @@ public class Second extends Activity {
         calendarView = findViewById(R.id.calendarView);
         ost = findViewById(R.id.ostatok);
         dbHelper = new DBHelper(this);
-
         ost.setText("Остаток денег: " + MainActivity.teleport);
         calendarView.setOnDateChangeListener(new OnDateChangeListener() {
             @Override

@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
     FragmentTransaction ft;
     DialogFragment frag1;
     DialogFragment frag2;
+    DialogFragment QUEST;
     Values account;
     static public int teleport;
     DBHelper dbHelper;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         account = new Values();
         frag1 = new Frag();
         frag2 = new Frag2();
+        QUEST= new Question();
         summy = findViewById(R.id.summa);
         itogo = findViewById(R.id.itogo);
         dif=findViewById(R.id.different);
@@ -61,16 +63,19 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
               frag2.show(getSupportFragmentManager(),"frag2");
                 break;
             case R.id.ras:
-                Intent i=new Intent(MainActivity.this, Second.class);
-                startActivity(i);
+                Intent intent1=new Intent(MainActivity.this, Second.class);
+                startActivity(intent1);
                 break;
             case R.id.info:
-                Intent intent=new Intent(MainActivity.this, Information.class);
-                startActivity(intent);
+                Intent intent2=new Intent(MainActivity.this, Information.class);
+                startActivity(intent2);
                 break;
             case R.id.day:
-                Intent in=new Intent(MainActivity.this,Day.class);
-                startActivity(in);
+                Intent intent3=new Intent(MainActivity.this,Day.class);
+                startActivity(intent3);
+                break;
+            case R.id.quest:
+                QUEST.show(getSupportFragmentManager(),"quest");
                 break;
             default:
                 break;
@@ -95,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
             Date date = new Date();
             String dateTime = dateFormat.format(date);
             cv.put("date", dateTime);
+            cv.put("dayvalue",100);
             db.insert("datatable", null, cv);
             dbHelper.close();
             Toast.makeText(getApplicationContext(),"Сохранено",Toast.LENGTH_SHORT).show();

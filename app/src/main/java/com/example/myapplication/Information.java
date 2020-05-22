@@ -1,20 +1,17 @@
 package com.example.myapplication;
 
-import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import org.w3c.dom.Text;
 
 public class Information extends AppCompatActivity  {
     DBHelper dbHelper;
@@ -60,6 +57,10 @@ public class Information extends AppCompatActivity  {
             case R.id.delete:
                 db.delete("datatable", null, null);
                 linLayout.removeAllViews();
+                break;
+            case R.id.exit:
+                Intent i= new Intent(Information.this,MainActivity.class);
+                startActivity(i);
                 break;
         }
         c.close();

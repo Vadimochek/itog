@@ -9,33 +9,44 @@
 
     <ScrollView
         android:id="@+id/scroll"
-        android:layout_width="413dp"
+        android:layout_width="404dp"
         android:layout_height="679dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:id="@+id/linLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical">
+
+        </LinearLayout>
     </ScrollView>
 
     <Button
         android:id="@+id/query"
-        android:layout_width="203dp"
-        android:layout_height="49dp"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:background="@drawable/update"
         android:onClick="onClick"
-        android:text="Получить данные"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/exit"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:background="@drawable/str"
+        android:onClick="onClick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/delete"
-        android:layout_width="200dp"
-        android:layout_height="47dp"
-        android:text="Удалить данные"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:background="@drawable/delete"
         android:onClick="onClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/query"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

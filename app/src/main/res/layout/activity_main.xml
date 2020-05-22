@@ -7,125 +7,141 @@
     android:background="@drawable/morning"
     tools:context=".MainActivity">
 
+
     <Button
         android:id="@+id/plus"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
-        android:layout_marginLeft="75dp"
-        android:layout_marginBottom="203dp"
-        android:background="#5161E701"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/pl"
         android:onClick="onClick"
-        android:text="Внести"
-        app:layout_constraintBottom_toTopOf="@+id/frag2"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/ras"
+        app:layout_constraintStart_toEndOf="@+id/quest"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/minus"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginBottom="203dp"
-        android:background="#A53B3B"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/mi"
         android:onClick="onClick"
-        android:text="Вычесть"
-        app:layout_constraintBottom_toTopOf="@+id/frag2"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-
-    <FrameLayout
-        android:id="@+id/frag2"
-        android:layout_width="398dp"
-        android:layout_height="404dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.58"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </FrameLayout>
+        app:layout_constraintEnd_toStartOf="@+id/day"
+        app:layout_constraintStart_toEndOf="@+id/ras"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/pB"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="354dp"
-        android:layout_height="103dp"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="358dp"
+        android:layout_height="92dp"
         android:layout_marginStart="28dp"
         android:layout_marginLeft="28dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="64dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/plus" />
 
     <Button
         android:id="@+id/ras"
-        android:layout_width="48dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="176dp"
-        android:layout_marginRight="176dp"
-        android:background="@android:drawable/ic_menu_month"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/calend"
         android:onClick="onClick"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/minus"
+        app:layout_constraintStart_toEndOf="@+id/plus"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/different"
-        android:layout_width="120dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="374dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
         android:text="Потрачено:"
+        android:textColor="#FF5722"
+        android:textSize="26sp"
+        app:fontFamily="sans-serif-light"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pB" />
+        app:layout_constraintTop_toBottomOf="@+id/summa" />
 
     <TextView
         android:id="@+id/itogo"
-        android:layout_width="120dp"
-        android:layout_height="23dp"
+        android:layout_width="374dp"
+        android:layout_height="35dp"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="50dp"
         android:text="Осталось:"
-        app:layout_constraintStart_toEndOf="@+id/different"
-        app:layout_constraintTop_toBottomOf="@+id/pB" />
+        android:textColor="#918B8B"
+        android:textSize="26sp"
+        app:fontFamily="sans-serif-light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/different" />
 
     <TextView
         android:id="@+id/summa"
-        android:layout_width="106dp"
-        android:layout_height="23dp"
+        android:layout_width="374dp"
+        android:layout_height="35dp"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="50dp"
         android:text="Всего:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/itogo"
+        android:textColor="#3F6FC2"
+        android:textSize="26sp"
+        app:fontFamily="sans-serif-light"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pB" />
 
     <Button
         android:id="@+id/info"
-        android:layout_width="69dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="21dp"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/inf"
         android:onClick="onClick"
-        android:text="INFO"
+        app:layout_constraintEnd_toStartOf="@+id/plus"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
+        android:id="@+id/quest"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/qest"
         android:onClick="onClick"
-        android:text="DAY"
+        app:layout_constraintEnd_toStartOf="@+id/plus"
+        app:layout_constraintStart_toEndOf="@+id/info"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/day"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:background="@drawable/loop"
+        android:onClick="onClick"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/minus"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
