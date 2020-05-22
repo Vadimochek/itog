@@ -27,7 +27,6 @@ DBHelper dbHelper;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor c=db.query("datatable",null,null,null,null,null,null);
         if (c.moveToFirst()) {
-
             int value = c.getColumnIndex("dayvalue");
            text.setText(c.getInt(value));
         }

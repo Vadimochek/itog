@@ -31,7 +31,7 @@ public class Information extends AppCompatActivity  {
     public void onClick(View v){
         LinearLayout linLayout = findViewById(R.id.linLayout);
         LayoutInflater ltInflater = getLayoutInflater();
-        SQLiteDatabase db=dbHelper.getWritableDatabase();
+        SQLiteDatabase db=dbHelper.getReadableDatabase();
         Cursor c=db.query("datatable",null,null,null,null,null,null);
         switch (v.getId()) {
             case R.id.query:
@@ -59,8 +59,9 @@ public class Information extends AppCompatActivity  {
                 linLayout.removeAllViews();
                 break;
             case R.id.exit:
-                Intent i= new Intent(Information.this,MainActivity.class);
-                startActivity(i);
+              //  Intent i= new Intent(Information.this,MainActivity.class);
+               //startActivity(i);
+                finish();
                 break;
         }
         c.close();
