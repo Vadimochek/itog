@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,8 +13,8 @@
         android:layout_height="75dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="72dp"
-        android:text="Введите количество дней до  зарплаты/стипендии:"
+        android:layout_marginTop="80dp"
+        android:text="Введите количество дней до зарплаты/стипендии:"
         android:textSize="26sp"
         app:fontFamily="sans-serif-light"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginLeft="100dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="101dp"
         android:layout_marginRight="101dp"
         android:background="@android:color/transparent"
@@ -41,9 +42,9 @@
         android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Количество дней"
         android:inputType="number"
@@ -54,14 +55,14 @@
 
     <TextView
         android:id="@+id/itog"
-        android:layout_width="378dp"
+        android:layout_width="394dp"
         android:layout_height="33dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="396dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="380dp"
+        android:textColor="#5919EE"
         android:textSize="15sp"
         app:fontFamily="sans-serif-light"
-        android:textColor="#5919EE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -81,21 +82,24 @@
         android:id="@+id/ostatok"
         android:layout_width="271dp"
         android:layout_height="36dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginLeft="68dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginLeft="84dp"
+        android:layout_marginBottom="20dp"
         android:text="Остаток денег:"
         android:textSize="26sp"
         app:fontFamily="sans-serif-light"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/ex"
         android:layout_width="60dp"
         android:layout_height="50dp"
-        android:background="@drawable/str"
+        android:layout_marginStart="3dp"
 
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/str"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

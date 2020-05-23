@@ -24,7 +24,7 @@ public class Second extends Activity {
     Button ras, exit;
     CalendarView calendarView;
     DBHelper dbHelper;
-    int DAY;
+   static public int DAY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,7 @@ public class Second extends Activity {
         calendarView.setOnDateChangeListener(new OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int day) {
+                //Отработка нажатия по календарю - получаем количество миллисекунд по нажатому дню и вычисляем разницу между днями
                 int ye = year;
                 int mo = month + 1;
                 int da = day + 1;
@@ -48,10 +49,13 @@ public class Second extends Activity {
                 Date date2;
                 try {
                     date2 = dateformat.parse(finaldate);
-                    long difference = Math.abs(date2.getTime() - currentdate.getTime());
-                    long difDate = difference / (24 * 60 * 60 * 1000);
-                    itog.setText("Вы должны тратить не больше " + MainActivity.teleport / difDate + " рублей в день");
-                    DAY = (int) (MainActivity.teleport / difDate);
+                    if(date2.getTime() - currentdate.getTime()<0) Toast.makeText(getApplicationContext(),"Неправильная дата",Toast.LENGTH_SHORT).show();
+                    else {
+                        long difference = date2.getTime() - currentdate.getTime();
+                        long difDate = difference / (24 * 60 * 60 * 1000);
+                        itog.setText("Вы должны тратить не больше " + MainActivity.teleport / difDate + " рублей в день");
+                        DAY = (int) (MainActivity.teleport / difDate);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -82,8 +86,9 @@ public class Second extends Activity {
                 cv.put("day",DAY);
                 db.insert("datatable",null,cv);
                 dbHelper.close();*/
-                Intent i = new Intent(Second.this, MainActivity.class);
-                startActivity(i);
+                finish();
+              //  Intent i = new Intent(Second.this, MainActivity.class);
+                //startActivity(i);
             }
         });
     }

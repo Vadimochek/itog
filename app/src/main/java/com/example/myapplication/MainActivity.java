@@ -29,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +40,7 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements Mesage,Summary {
+    Connection con;
     ProgressBar pb;
     Button sum, min;
     TextView summy, itogo, dif;
@@ -69,23 +71,12 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         itogo = findViewById(R.id.itogo);
         dif = findViewById(R.id.different);
         dbHelper = new DBHelper(this);
+        summy.setText("Всего: "+ account.summary);
+        dif.setText("Потрачено: " + account.waste);
+        itogo.setText("Осталось: " + (account.summary-account.waste));
+        if(account.summary-account.waste==0) teleport =0;
         //new Load().execute();
-      /*  send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String n = name.getText().toString();
-                int a = Integer.valueOf(age.getText().toString());
-                student = new Student(n, a);
-                new SendAsyncTask().execute();
-            }
-        });
-        get.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new GetAsyncTask().execute();
-            }
-        });
-    }*/
+
     }
 
     public void onClick(View v) {
@@ -94,10 +85,10 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
             case R.id.minus:
                 if (account.summary == 0)
                     Toast.makeText(getApplicationContext(), "Сначала внесите сумму", Toast.LENGTH_SHORT).show();
-                else frag1.show(getSupportFragmentManager(), "frag1");
+                else frag1.show(getSupportFragmentManager(), "frag1");//Показ диалогового окна с вводом суммы
                 break;
             case R.id.plus:
-                frag2.show(getSupportFragmentManager(), "frag2");
+                frag2.show(getSupportFragmentManager(), "frag2");// Ещё один диалог
                 break;
             case R.id.ras:
                 Intent intent1 = new Intent(MainActivity.this, Second.class);
@@ -112,32 +103,13 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
                 startActivity(intent3);
                 break;
             case R.id.quest:
-                QUEST.show(getSupportFragmentManager(), "quest");
-               /* SQLiteDatabase db = dbHelper.getReadableDatabase();
-                Cursor c = db.query("datatable", null, null, null, null, null, null);
-                int v2 = 0, v1 = 0;
-                int id = c.getColumnIndex("date");
-                int val = c.getColumnIndex("value");
-                int direct = c.getColumnIndex("direction");
-                do {
-                    if (c.getString(direct).equals("Внесение")) v2 += c.getInt(val);
-                    else v1 += c.getInt(val);
-                    summy.setText("Всего: " + v2);
-                    itogo.setText("Потрачено: " + v1);
-                    dif.setText("Осталось: " + (v2 - v1));
-                } while (c.moveToNext());
-                try {
-                    c.close();
-                    dbHelper.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
+                QUEST.show(getSupportFragmentManager(), "quest");//Диалог-памятка приложения
                 break;
             default:
                 break;
         }
     }
-
+//Методы интерфейсов для задания значений остатка, всей суммы, потраченной суммы
     @Override
     public void fragmentvalue(int value) {
         if (account.summary - account.waste - value < 0)
@@ -156,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
             Date date = new Date();
             String dateTime = dateFormat.format(date);
             cv.put("date", dateTime);
-            cv.put("dayvalue", 100);
             db.insert("datatable", null, cv);
             dbHelper.close();
             Toast.makeText(getApplicationContext(), "Сохранено", Toast.LENGTH_SHORT).show();
@@ -171,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         pb.setMax(account.summary);
         summy.setText("Всего: " + account.summary);
         teleport = account.summary - account.waste;
+        itogo.setText("Осталось: " + teleport);
         ContentValues cv = new ContentValues();
         cv.put("value", value);
         cv.put("direction", "Внесение");
@@ -183,5 +155,36 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         Toast.makeText(getApplicationContext(), "Сохранено", Toast.LENGTH_SHORT).show();
     }
 
+   /* class Load extends AsyncTask<Void, Void, Void> {
+        int v2 = 0, v1 = 0;
+        @Override
+        protected Void doInBackground(Void... params) {
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            Cursor c = db.query("datatable", null, null, null, null, null, null);
+            int id = c.getColumnIndex("date");
+            int val = c.getColumnIndex("value");
+            int direct = c.getColumnIndex("direction");
+            do {
+                if (c.getString(direct).equals("Внесение")) v2 += c.getInt(val);
+                else v1 += c.getInt(val);
+
+            } while (c.moveToNext());
+            try {
+                c.close();
+                dbHelper.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+                summy.setText("Всего: " + v2);
+                itogo.setText("Потрачено: " + v1);
+                dif.setText("Осталось: " + (v2 - v1));
+        }
+    }*/
 }
 

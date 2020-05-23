@@ -25,6 +25,7 @@ public class Frag2 extends DialogFragment {
             activity=(Activity) context;
         }
     }
+    //Создание диалогового окна и вызов метода интерфейса в активити
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment2, null);

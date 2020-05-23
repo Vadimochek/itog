@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-
+//Класс, который создаёт таблицу и позволяет с ней работать
 class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context){
         super(context,"DataBase",null,1);
