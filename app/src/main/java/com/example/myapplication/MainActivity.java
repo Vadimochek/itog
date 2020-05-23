@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +32,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
     Values account;
     static public int teleport;
     DBHelper dbHelper;
+    String DATE ="",DIRECTION="";
+    int DAILY,VALUE;
   //  private JSONParser JSONP;
    // private final String baseUrl = "http://192.168.43.215:8080"; // сюда нужно будет вписать ваш IP из ipconfig в CMD
 
@@ -75,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         dif.setText("Потрачено: " + account.waste);
         itogo.setText("Осталось: " + (account.summary-account.waste));
         if(account.summary-account.waste==0) teleport =0;
-        //new Load().execute();
+
 
     }
 
@@ -152,39 +160,65 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         cv.put("date", dateTime);
         db.insert("datatable", null, cv);
         dbHelper.close();
+        DATE=dateTime;
+        VALUE=value;
+        DIRECTION="Внесение";
+        new Load().execute();
         Toast.makeText(getApplicationContext(), "Сохранено", Toast.LENGTH_SHORT).show();
     }
 
-   /* class Load extends AsyncTask<Void, Void, Void> {
-        int v2 = 0, v1 = 0;
-        @Override
-        protected Void doInBackground(Void... params) {
-            SQLiteDatabase db = dbHelper.getReadableDatabase();
-            Cursor c = db.query("datatable", null, null, null, null, null, null);
-            int id = c.getColumnIndex("date");
-            int val = c.getColumnIndex("value");
-            int direct = c.getColumnIndex("direction");
-            do {
-                if (c.getString(direct).equals("Внесение")) v2 += c.getInt(val);
-                else v1 += c.getInt(val);
+    class Load extends AsyncTask<String, String, String> {
+        String  ip ="192.168.43.215";
+        String name= "ql5047.site4now.net";
+        String log= "DB_A61C90_data_admin";
+        String pass = "Ndbyrkcnelbj4";
 
-            } while (c.moveToNext());
-            try {
-                c.close();
-                dbHelper.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
 
         @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-                summy.setText("Всего: " + v2);
-                itogo.setText("Потрачено: " + v1);
-                dif.setText("Осталось: " + (v2 - v1));
+        protected String doInBackground(String... params) {
+          try {
+              con = connectionclass(log, pass, name, ip);
+              String query = "insert into database " + DATE + " "+VALUE + " "+DIRECTION;
+              Statement stmt = con.createStatement();
+              ResultSet rs = stmt.executeQuery(query);
+              Toast.makeText(getApplicationContext(),"baraba"+rs,Toast.LENGTH_LONG);
+          } catch (SQLException se)
+          {
+              Log.e("error here 1 : ", se.getMessage());
+          }
+          return ip;
         }
-    }*/
+    }
+     @SuppressLint("NewApi")
+    public Connection connectionclass(String user, String password, String database, String server)
+    {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        Connection connection = null;
+        String ConnectionURL = null;
+        try
+        {
+            Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
+            ConnectionURL = "jdbc:jtds:sqlserver://sql5047.site4now.net;database=DB_A61C90_data;user=DB_A61C90_data_admin;password=Ndbyrkcnelbj4";
+//            ConnectionURL = "jdbc:jtds:sqlserver://192.168.1.9;database=datatable;instance=SQLEXPRESS;Network Protocol=NamedPipes" ;
+
+
+            connection = DriverManager.getConnection(ConnectionURL);
+        }
+        catch (SQLException se)
+        {
+            Log.e("error here 1 : ", se.getMessage());
+        }
+        catch (ClassNotFoundException e)
+        {
+            Log.e("error here 2 : ", e.getMessage());
+        }
+        catch (Exception e)
+        {
+            Log.e("error here 3 : ", e.getMessage());
+        }
+        return connection;
+    }
 }
+
 
