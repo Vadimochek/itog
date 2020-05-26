@@ -22,7 +22,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import net.sourceforge.jtds.jdbc.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -57,10 +57,10 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
     Values account;
     static public int teleport;
     DBHelper dbHelper;
-    String DATE ="",DIRECTION="";
-    int DAILY,VALUE;
-  //  private JSONParser JSONP;
-   // private final String baseUrl = "http://192.168.43.215:8080"; // сюда нужно будет вписать ваш IP из ipconfig в CMD
+    String DATE = "", DIRECTION = "";
+    int DAILY, VALUE;
+    //  private JSONParser JSONP;
+    // private final String baseUrl = "http://192.168.43.215:8080"; // сюда нужно будет вписать ваш IP из ipconfig в CMD
 
 
     @Override
@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         itogo = findViewById(R.id.itogo);
         dif = findViewById(R.id.different);
         dbHelper = new DBHelper(this);
-        summy.setText("Всего: "+ account.summary);
+        summy.setText("Всего: " + account.summary);
         dif.setText("Потрачено: " + account.waste);
-        itogo.setText("Осталось: " + (account.summary-account.waste));
-        if(account.summary-account.waste==0) teleport =0;
+        itogo.setText("Осталось: " + (account.summary - account.waste));
+        if (account.summary - account.waste == 0) teleport = 0;
 
 
     }
@@ -93,7 +93,8 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
             case R.id.minus:
                 if (account.summary == 0)
                     Toast.makeText(getApplicationContext(), "Сначала внесите сумму", Toast.LENGTH_SHORT).show();
-                else frag1.show(getSupportFragmentManager(), "frag1");//Показ диалогового окна с вводом суммы
+                else
+                    frag1.show(getSupportFragmentManager(), "frag1");//Показ диалогового окна с вводом суммы
                 break;
             case R.id.plus:
                 frag2.show(getSupportFragmentManager(), "frag2");// Ещё один диалог
@@ -117,7 +118,8 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
                 break;
         }
     }
-//Методы интерфейсов для задания значений остатка, всей суммы, потраченной суммы
+
+    //Методы интерфейсов для задания значений остатка, всей суммы, потраченной суммы
     @Override
     public void fragmentvalue(int value) {
         if (account.summary - account.waste - value < 0)
@@ -131,13 +133,17 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
             itogo.setText("Осталось: " + teleport);
             ContentValues cv = new ContentValues();
             cv.put("value", value);
-            cv.put("direction", "Списание");
+            cv.put("direction", "Write-downs");
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy   HH:mm");
             Date date = new Date();
             String dateTime = dateFormat.format(date);
             cv.put("date", dateTime);
             db.insert("datatable", null, cv);
             dbHelper.close();
+            DATE = dateTime;
+            VALUE = value;
+            DIRECTION = "Write-downs";
+            new Load().execute();
             Toast.makeText(getApplicationContext(), "Сохранено", Toast.LENGTH_SHORT).show();
         }
     }
@@ -153,72 +159,58 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         itogo.setText("Осталось: " + teleport);
         ContentValues cv = new ContentValues();
         cv.put("value", value);
-        cv.put("direction", "Внесение");
+        cv.put("direction", "Receipt");
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy   HH:mm");
         Date date = new Date();
         String dateTime = dateFormat.format(date);
         cv.put("date", dateTime);
         db.insert("datatable", null, cv);
         dbHelper.close();
-        DATE=dateTime;
-        VALUE=value;
-        DIRECTION="Внесение";
+        DATE = dateTime;
+        VALUE = value;
+        DIRECTION = "Receipt";
         new Load().execute();
         Toast.makeText(getApplicationContext(), "Сохранено", Toast.LENGTH_SHORT).show();
     }
-
-    class Load extends AsyncTask<String, String, String> {
-        String  ip ="192.168.43.215";
-        String name= "ql5047.site4now.net";
-        String log= "DB_A61C90_data_admin";
-        String pass = "Ndbyrkcnelbj4";
-
+    class Load extends AsyncTask<Void, Void, Void> {
 
         @Override
-        protected String doInBackground(String... params) {
-          try {
-              con = connectionclass(log, pass, name, ip);
-              String query = "insert into database " + DATE + " "+VALUE + " "+DIRECTION;
-              Statement stmt = con.createStatement();
-              ResultSet rs = stmt.executeQuery(query);
-              Toast.makeText(getApplicationContext(),"baraba"+rs,Toast.LENGTH_LONG);
-          } catch (SQLException se)
-          {
-              Log.e("error here 1 : ", se.getMessage());
-          }
-          return ip;
+        protected Void doInBackground(Void... params) {
+            try {
+                Connection con = connectionclass();
+                String query = "INSERT INTO [DB_A61C90_data].[dbo].[database] (date, value, direction) VALUES "+"('"+DATE+"', "+"'"+VALUE+"', '"+DIRECTION+"')";
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(query);
+                con.close();
+            } catch (SQLException se) {
+                Log.e("error here 1 : ", se.getMessage());
+            }
+            return null;
         }
     }
-     @SuppressLint("NewApi")
-    public Connection connectionclass(String user, String password, String database, String server)
-    {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        Connection connection = null;
-        String ConnectionURL = null;
-        try
-        {
-            Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
-            ConnectionURL = "jdbc:jtds:sqlserver://sql5047.site4now.net;database=DB_A61C90_data;user=DB_A61C90_data_admin;password=Ndbyrkcnelbj4";
+
+        @SuppressLint("NewApi")
+        public Connection connectionclass() {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            Connection connection = null;
+            String ConnectionURL = null;
+            try {
+                Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
+                ConnectionURL = "jdbc:jtds:sqlserver://sql5047.site4now.net;database=DB_A61C90_data;user=DB_A61C90_data_admin;password=Ndbyrkcnelbj4;";
 //            ConnectionURL = "jdbc:jtds:sqlserver://192.168.1.9;database=datatable;instance=SQLEXPRESS;Network Protocol=NamedPipes" ;
 
 
-            connection = DriverManager.getConnection(ConnectionURL);
+                connection = DriverManager.getConnection(ConnectionURL);
+            } catch (SQLException se) {
+                Log.e("error here 1 : ", se.getMessage());
+            } catch (ClassNotFoundException e) {
+                Log.e("error here 2 : ", e.getMessage());
+            } catch (Exception e) {
+                Log.e("error here 3 : ", e.getMessage());
+            }
+            return connection;
         }
-        catch (SQLException se)
-        {
-            Log.e("error here 1 : ", se.getMessage());
-        }
-        catch (ClassNotFoundException e)
-        {
-            Log.e("error here 2 : ", e.getMessage());
-        }
-        catch (Exception e)
-        {
-            Log.e("error here 3 : ", e.getMessage());
-        }
-        return connection;
     }
-}
 
 
