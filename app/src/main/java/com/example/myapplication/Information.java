@@ -133,11 +133,11 @@ public class Information extends AppCompatActivity {
                  TextView tvName = item.findViewById(R.id.center);
                  String call,call2,call3;
                  if (result.get(i).toString().substring(14,21).equals("Receipt"))
-                     call=result.get(i).toString().substring(14,21);
-                 else call=result.get(i).toString().substring(14,24);
+                     call="Внесение";
+                 else call="Списание";
                  call2=resultSet1.get(i).toString().substring(9,27);
-                 call3=resultSet2.get(i).toString().substring(10,14);
-                 call3=call3.replace("\"","");
+                 call3=resultSet2.get(i).toString().substring(10,resultSet2.get(i).toString().length()-2);
+
                  tvName.setText(call);
                  TextView tvPosition = (TextView) item.findViewById(R.id.date);
                  tvPosition.setText("Дата: " + call2);

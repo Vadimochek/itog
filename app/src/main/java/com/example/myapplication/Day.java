@@ -59,5 +59,5 @@ Values account;
             ost.setText("Остаток: " + (account.summary - account.waste));
         }
     }
-    
+
 }

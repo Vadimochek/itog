@@ -13,8 +13,10 @@ import android.os.Bundle;
 
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -57,8 +59,8 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
     Values account;
     static public int teleport;
     String DATE = "", DIRECTION = "";
-    int DAILY, VALUE;
-
+    int VALUE;
+    JSONArray resultSet1 = new JSONArray();
 
 
     @Override
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         dif.setText("Потрачено: " + account.waste);
         itogo.setText("Осталось: " + (account.summary - account.waste));
         if (account.summary - account.waste == 0) teleport = 0;
+        new Start().execute();
 
 
     }
@@ -175,6 +178,80 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         }
     }
 
+    class Start extends AsyncTask<Void, String, JSONArray> {
+        Connection con;
+        Statement stmt,s2;
+        ResultSet rs1;
+        ResultSet rs2;
+
+        @Override
+        protected JSONArray doInBackground(Void... params) {
+            JSONArray resultSet = new JSONArray();
+            try {
+                con = connectionclass();
+                String  query = "SELECT direction FROM [DB_A61C90_data].[dbo].[database]";
+                String query2= "SELECT value FROM [DB_A61C90_data].[dbo].[database]";
+                stmt = con.createStatement();
+                s2=con.createStatement();
+                rs1 = stmt.executeQuery(query);
+                rs2 = s2.executeQuery(query2);
+                if(rs1!=null) {
+                    int columnCount = rs1.getMetaData().getColumnCount();
+                    while (rs1.next()) {
+                        JSONObject values = new JSONObject();
+                        JSONObject values2 = new JSONObject();
+                        for (int i = 1; i <= columnCount; i++) {
+                            values.put(rs1.getMetaData().getColumnName(i), (rs1.getString(i) != null) ? rs1.getString(i) : "");
+                            if (rs2.next()) values2.put(rs2.getMetaData().getColumnName(i), (rs2.getString(i) != null) ? rs2.getString(i) : "");
+                        }
+                        resultSet1.put(values2);
+                        resultSet.put(values);
+                    }
+                }
+            } catch (SQLException se) {
+                Log.e("error here 1 : ", se.getMessage());
+            } catch (JSONException js) {
+                js.printStackTrace();
+            } finally {
+                try {
+                    if (rs1 != null) rs1.close();
+                    if (rs2 != null) rs2.close();
+                    if (stmt != null) stmt.close();
+                    if (s2 != null) s2.close();
+                    if (con != null) con.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e.getMessage());
+                }
+            }
+            return resultSet;
+        }
+        @Override
+        protected void onPostExecute(JSONArray result) {
+            try{
+                int sum=0,difer=0;
+                for (int i=0;i<result.length();i++) {
+                    String call2;
+                    call2=resultSet1.get(i).toString().substring(10,resultSet1.get(i).toString().length()-2);
+                    if (result.get(i).toString().substring(14,21).equals("Receipt"))
+                        sum+=Integer.parseInt(call2);
+                    else
+                    difer +=Integer.parseInt(call2);
+                }
+                summy.setText("Всего: "+ sum);
+                itogo.setText("Осталось: " + (sum-difer));
+                dif.setText("Потрачено: "+(difer));
+                account.summary+=sum;
+                account.waste+=difer;
+                teleport+=sum-difer;
+                pb.setMax(account.summary);
+                pb.setProgress(account.waste);
+            }catch(JSONException e){
+                e.printStackTrace();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
         @SuppressLint("NewApi")
         public Connection connectionclass() {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
