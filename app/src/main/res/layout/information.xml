@@ -8,10 +8,12 @@
 
     <ScrollView
         android:id="@+id/scroll"
-        android:layout_width="404dp"
-        android:layout_height="679dp"
+        android:layout_width="407dp"
+        android:layout_height="500dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exit"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:id="@+id/linLayout"
@@ -26,7 +28,7 @@
         android:id="@+id/query"
         android:layout_width="60dp"
         android:layout_height="50dp"
-        android:background="@drawable/update"
+        android:background="@drawable/upd"
         android:onClick="onClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +37,7 @@
         android:id="@+id/exit"
         android:layout_width="60dp"
         android:layout_height="50dp"
-        android:background="@drawable/str"
+        android:background="@drawable/back"
         android:onClick="onClick"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +46,7 @@
         android:id="@+id/delete"
         android:layout_width="60dp"
         android:layout_height="50dp"
-        android:background="@drawable/delete"
+        android:background="@drawable/dele"
         android:onClick="onClick"
         app:layout_constraintEnd_toStartOf="@+id/query"
         app:layout_constraintTop_toTopOf="parent" />

@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         Toast.makeText(getApplicationContext(), "Сохранено", Toast.LENGTH_SHORT).show();
     }
     class Load extends AsyncTask<Void, Void, Void> {
-
+        JSONArray resultSet = new JSONArray();
         @Override
         protected Void doInBackground(Void... params) {
             try {
@@ -181,10 +181,10 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
                 String query = "INSERT INTO [DB_A61C90_data].[dbo].[database] (date, value, direction) VALUES "+"('"+DATE+"', "+"'"+VALUE+"', '"+DIRECTION+"')";
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                con.close();
             } catch (SQLException se) {
                 Log.e("error here 1 : ", se.getMessage());
             }
+
             return null;
         }
     }
