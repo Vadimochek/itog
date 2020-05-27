@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Day extends AppCompatActivity implements Mesage {
 TextView text,ost,wast;
-DBHelper dbHelper;
 Button minus,exit;
 Frag dialog;
 ProgressBar pro;
@@ -26,7 +25,6 @@ Values account;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.day);
         text = findViewById(R.id.txt);
-        dbHelper = new DBHelper(this);
         ost = findViewById(R.id.ostatok);
         pro=findViewById(R.id.progressBar);
         wast = findViewById(R.id.potracheno);
@@ -61,16 +59,5 @@ Values account;
             ost.setText("Остаток: " + (account.summary - account.waste));
         }
     }
-
-      /*      public void onClick(View v){
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor c=db.query("datatable",null,null,null,null,null,null);
-        if (c.moveToFirst()) {
-            int value = c.getColumnIndex("dayvalue");
-           text.setText(c.getInt(value));
-        }
-        else Toast.makeText(getApplicationContext(), "Ничего", Toast.LENGTH_LONG).show();
-        c.close();
-        dbHelper.close();
-    }*/
+    
 }

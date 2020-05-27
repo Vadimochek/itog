@@ -23,7 +23,6 @@ public class Second extends Activity {
     TextView itog, ost;
     Button ras, exit;
     CalendarView calendarView;
-    DBHelper dbHelper;
    static public int DAY;
 
     @Override
@@ -34,7 +33,6 @@ public class Second extends Activity {
         text = findViewById(R.id.editText);
         calendarView = findViewById(R.id.calendarView);
         ost = findViewById(R.id.ostatok);
-        dbHelper = new DBHelper(this);
         ost.setText("Остаток денег: " + MainActivity.teleport);
         calendarView.setOnDateChangeListener(new OnDateChangeListener() {
             @Override
@@ -81,14 +79,8 @@ public class Second extends Activity {
         exit = findViewById(R.id.ex);
         exit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                /*ContentValues cv = new ContentValues();
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                cv.put("day",DAY);
-                db.insert("datatable",null,cv);
-                dbHelper.close();*/
                 finish();
-              //  Intent i = new Intent(Second.this, MainActivity.class);
-                //startActivity(i);
+
             }
         });
     }

@@ -28,7 +28,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Information extends AppCompatActivity {
-    DBHelper dbHelper;
     int[] colors = new int[2];
     String VALUE="";
     String DATE="", DIRECTION="";
@@ -38,7 +37,6 @@ public class Information extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.information);
         // text=findViewById(R.id.id);
-        dbHelper = new DBHelper(this);
         //      colors[0] = Color.parseColor("#835E5C");
         //      colors[1] = Color.parseColor("#69775F");
     }
@@ -47,34 +45,13 @@ public class Information extends AppCompatActivity {
     public void onClick(View v) {
         LinearLayout linLayout = findViewById(R.id.linLayout);
         LayoutInflater ltInflater = getLayoutInflater();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor c = db.query("datatable", null, null, null, null, null, null);
         switch (v.getId()) {
             case R.id.query:
                 linLayout.removeAllViews();
-                if (c.moveToFirst()) {
-                    int id = c.getColumnIndex("date");
-                    int val = c.getColumnIndex("value");
-                    int direct = c.getColumnIndex("direction");
                     new unLoad().execute();
-           /*      do {
-                   View item = ltInflater.inflate(R.layout.list, linLayout, false);
-                    TextView tvName = item.findViewById(R.id.center);
-                    tvName.setText(c.getString(direct));
-                    TextView tvPosition = (TextView) item.findViewById(R.id.date);
-                    tvPosition.setText("Дата: " + c.getString(id));
-                    TextView tvSalary = (TextView) item.findViewById(R.id.money);
-                    tvSalary.setText("Сумма: " + c.getInt(val));
-                    item.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-                  // if (c.getString(direct).equals("Внесение")) item.setBackgroundColor(colors[1]);
-                  // else item.setBackgroundColor(colors[0]);
-                    linLayout.addView(item);
-                } while (c.moveToNext());*/
-                } else Toast.makeText(getApplicationContext(), "Ничего", Toast.LENGTH_LONG).show();
-                break;
+                                 break;
             case R.id.delete:
                 new Delete().execute();
-                db.delete("datatable", null, null);
                 linLayout.removeAllViews();
                 colors[0] = 1;
                 break;
@@ -86,8 +63,6 @@ public class Information extends AppCompatActivity {
                     finish();
                 break;
         }
-        c.close();
-        dbHelper.close();
     }
     JSONArray resultSet1 = new JSONArray();
     JSONArray resultSet2 = new JSONArray();
@@ -183,17 +158,7 @@ public class Information extends AppCompatActivity {
         /*protected void onProgressUpdate(String... Params){
             super.onProgressUpdate(Params);
 
-            View item = ltInflater.inflate(R.layout.list, linLayout, false);
-            TextView tvName = item.findViewById(R.id.center);
-            tvName.setText(DIRECTION);
-            TextView tvPosition = (TextView) item.findViewById(R.id.date);
-            tvPosition.setText("Дата: " + DATE);
-            TextView tvSalary = (TextView) item.findViewById(R.id.money);
-            tvSalary.setText("Сумма: " + VALUE);
-            item.getLayoutParams().width = LinearLayout.LayoutParams.MATCH_PARENT;
-            if (DIRECTION.equals("Receipt")) item.setBackgroundColor(colors[1]);
-            else item.setBackgroundColor(colors[0]);
-            linLayout.addView(item);
+
 */
         class Delete extends AsyncTask<Void, Void, Void> {
             @Override

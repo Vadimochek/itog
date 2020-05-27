@@ -56,11 +56,9 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
     DialogFragment QUEST;
     Values account;
     static public int teleport;
-    DBHelper dbHelper;
     String DATE = "", DIRECTION = "";
     int DAILY, VALUE;
-    //  private JSONParser JSONP;
-    // private final String baseUrl = "http://192.168.43.215:8080"; // сюда нужно будет вписать ваш IP из ipconfig в CMD
+
 
 
     @Override
@@ -78,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         summy = findViewById(R.id.summa);
         itogo = findViewById(R.id.itogo);
         dif = findViewById(R.id.different);
-        dbHelper = new DBHelper(this);
         summy.setText("Всего: " + account.summary);
         dif.setText("Потрачено: " + account.waste);
         itogo.setText("Осталось: " + (account.summary - account.waste));
@@ -126,20 +123,13 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
             Toast.makeText(getApplicationContext(), "Вы превысили свой лимит,введите меньшую сумму или внесите её", Toast.LENGTH_SHORT).show();
         else {
             account.waste = account.waste + value;
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
             pb.setProgress(account.waste);
             teleport = account.summary - account.waste;
             dif.setText("Потрачено: " + account.waste);
             itogo.setText("Осталось: " + teleport);
-            ContentValues cv = new ContentValues();
-            cv.put("value", value);
-            cv.put("direction", "Write-downs");
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy   HH:mm");
             Date date = new Date();
             String dateTime = dateFormat.format(date);
-            cv.put("date", dateTime);
-            db.insert("datatable", null, cv);
-            dbHelper.close();
             DATE = dateTime;
             VALUE = value;
             DIRECTION = "Write-downs";
@@ -151,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
 
     @Override
     public void fragsum(int value) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
         account.summary += value;
         pb.setMax(account.summary);
         summy.setText("Всего: " + account.summary);
@@ -163,9 +152,6 @@ public class MainActivity extends AppCompatActivity implements Mesage,Summary {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy   HH:mm");
         Date date = new Date();
         String dateTime = dateFormat.format(date);
-        cv.put("date", dateTime);
-        db.insert("datatable", null, cv);
-        dbHelper.close();
         DATE = dateTime;
         VALUE = value;
         DIRECTION = "Receipt";
